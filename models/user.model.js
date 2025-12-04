@@ -24,25 +24,30 @@ const userSchema = new mongoose.Schema({
         match: [/\S+@\S+\.\S+/, ], 
     },
 
-    mobileNo:{
-        type: Number,
+     mobileNo: {
+        type: String, // FIXED
+        required: [true, "Phone-number is required"],
         unique: true,
         trim: true,
-        maxlength: [10, "Phone-number must be at least 10 characters"],
-        match: [/^\+?[1-9]\d{1,14}$/],
-        required:[ true, "Phone-number is required"]
+        minlength: [10, "Phone-number must be at least 10 characters"],
+        maxlength: [15, "Phone-number must not exceed 15 characters"],
+        match: [/^\+?[1-9]\d{1,14}$/, "Invalid phone number format"],
     },
-    password: {
-        type: String,
-        required: [true,"password is required"],
-        minLength: [8, "Password must be at least 5 characters" ],
-        match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=])[A-Za-z\d!@#$%^&*()_\-+=]{10,}$/
-        , "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character."],
-    },
+
+   password: {
+  type: String,
+  required: [true, "Password is required"],
+  minlength: [10, "Password must be at least 10 characters"],
+  match: [
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=-]).{10,}$/,
+    "Password must contain uppercase, lowercase, digit, and special character."
+  ],
+},
 },
 {
     timestamps: true,
 });
+
  
 const user = mongoose.model("User", userSchema);
 

@@ -73,16 +73,27 @@ try {
     }
 
     // check if user does not exist
-    const user = await user.findOne({ email }).session(session);
-    if (!user) {
+    const existingUser = await user.findOne({ email }).session(session);
+    if (!existingUser) {
         return res.status(400).json({ message: "User does not exist" });
     }
 
     // compare password
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, existingUser.password);
     if (!isMatch) {
         return res.status(400).json({ message: "Invalid credentials" });
     }
+    // generate jwt token
+    const token = jwt.sign(
+        { userId: user._id, email: user.email },
+        JWT_SECRET,
+        { expiresIn: JWT_EXPIRES_IN }
+    );
+    await session.commitTransaction();
+    session.endSession();
+    return res.status(200).json({ message: "User signed in successfully", token });
+
+
 
 } catch (error) {
    res.status(500).json({ message: "Something went wrong", error: error.message }); 
