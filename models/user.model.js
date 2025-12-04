@@ -24,14 +24,13 @@ const userSchema = new mongoose.Schema({
         match: [/\S+@\S+\.\S+/, ], 
     },
 
-     phoneNo: {
-        type: String, // FIXED
-        required: [true, "Phone-number is required"],
-        unique: true,
+   phoneNo:{
+        type: Number,
+        //unique: true,
         trim: true,
-        minlength: [10, "Phone-number must be at least 10 characters"],
-        maxlength: [15, "Phone-number must not exceed 15 characters"],
-        match: [/^\+?[1-9]\d{1,14}$/, "Invalid phone number format"],
+        maxlength: [10, "Phone-number must be at least 10 characters"],
+        match: [/^\+?[1-9]\d{1,14}$/],
+        required:[ true, "Phone-number is required"],
     },
 
    password: {
