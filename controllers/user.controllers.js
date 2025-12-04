@@ -10,10 +10,10 @@ export const Signup = async (req, res, next) => {
     session.startTransaction();
 
     try {
-    const { FirstName, LastName, email, mobileNo, password } = req.body;
+    const { firstName, lastName, email, phoneNo, password } = req.body;
 
     // checking if fields are empty
-    if (!FirstName || !LastName || !email || !mobileNo || !password) {
+    if (!firstName || !lastName || !email || !phoneNo || !password) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -29,10 +29,10 @@ export const Signup = async (req, res, next) => {
 
     // creating new user
     const newUser = await user.create([{ 
-        FirstName,
-        LastName,
+        firstName,
+        lastName,
         email,
-        mobileNo,
+        phoneNo,
         password: hashedPassword 
     }], { session });
 

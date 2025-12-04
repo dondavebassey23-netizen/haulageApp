@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    FirstName:{
+    firstName:{
         type: String,
         required: true,
         trim: true,
         minLength: [3, "Name must be at least 3 characters"],
     },
 
-    LastName:{
+    lastName:{
         type: String,
         required: true,
         trim: true,
@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
         match: [/\S+@\S+\.\S+/, ], 
     },
 
-     mobileNo: {
+     phoneNo: {
         type: String, // FIXED
         required: [true, "Phone-number is required"],
         unique: true,
